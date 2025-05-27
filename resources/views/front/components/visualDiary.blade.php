@@ -11,7 +11,7 @@
                     <div class="uk-cover-container uk-border-rounded">
                         <img src="{{ asset('storage'.'/'.$lastPhoto->user->name.'/'.$image->name) }}" 
                              class="uk-cover"
-                             loading="eager"
+                             loading="lazy"
                              style="object-fit: cover;"
                              width="1800" 
                              height="1200" 

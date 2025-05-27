@@ -84,18 +84,18 @@ class BlogController extends Controller
          // Crear un cliente Guzzle
          $client = new Client();
 
-           // Hacer una petición GET a la API
-        $response = $client->get('https://zenquotes.io/api/random', [
-        ]);
+        // Hacer una petición GET a la API
+        // $response = $client->get('https://zenquotes.io/api/random', [
+        // ]);
 
         // Decodificar la respuesta JSON
-        $phrase = json_decode($response->getBody(), true);
+        // $phrase = json_decode($response->getBody(), true);
 
         // Si la API devuelve una lista de frases, tomamos la primera
-        $textPhrase = $phrase[0]['q']; // Contenido de la frase
-        $author = $phrase[0]['a']; // Autor de la frase
+        // $textPhrase = $phrase[0]['q']; // Contenido de la frase
+        // $author = $phrase[0]['a']; // Autor de la frase
 
-        return view('front.sections.home', compact('articles','lastNewText','lastNewPhoto','catcount','tags','smallarticles','textPhrase','author'));
+        return view('front.sections.home', compact('articles','lastNewText','lastNewPhoto','catcount','tags','smallarticles'));
         
     }
 
