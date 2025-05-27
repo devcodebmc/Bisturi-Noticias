@@ -26,7 +26,7 @@
             <li><a href="/informacion-general">General</a></li>
           </ul>
         </li>
-        {{-- <li>
+        <li>
           <a href="#" class="desktop-item">+ Noticias</a>
           <input type="checkbox" id="showMega">
           <label for="showMega" class="mobile-item">Mega Menu</label>
@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-        </li> --}}
+        </li>
         <li><a href="/deportes">Deportes</a></li>
         <div class="uk-flex-inline">
           @include('front.components.socials', ['location' =>'navbar'])
