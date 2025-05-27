@@ -3,7 +3,7 @@
 @import url('https://fonts.cdnfonts.com/css/anek-telugu');
 @import url('https://fonts.cdnfonts.com/css/codec-pro');
 
-.last-image{
+.last-image, .main-image {
   object-fit: cover;
 }
 .b-hr {

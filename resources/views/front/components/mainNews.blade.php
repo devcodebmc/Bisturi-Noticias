@@ -7,6 +7,7 @@
         <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}" title="{{ $article->title }}">
           <img src="{{ asset('storage'.'/'.$article->user->name.'/'.$image->name) }}" 
                 alt="{{ $article->title }}" 
+                class="main-image"
                 uk-cover>
         </a>
       </div>

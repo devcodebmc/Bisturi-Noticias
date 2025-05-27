@@ -14,8 +14,9 @@ class Tag extends Model
 
     public function articles(){
 
-        return $this->belongsToMany(Post::class)->withTimestamps();
+        return $this->belongsToMany(Article::class)->withTimestamps();
     }
+
     // Configuración de scope para el tag name
     public function scopeSearch($query, $name)
     {

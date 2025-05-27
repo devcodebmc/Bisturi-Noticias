@@ -15,17 +15,6 @@
         </h3>
 
         @include('front.components.lastNews',[$lastNewText, 'lastNewText'])
-           
-
-{{-- 
-        <div class="uk-margin-small-top">
-            @include('front.partials.cartuchos',
-                [
-                    'lastgeneralNews' => $lastNewText, 
-                    'lastNewPhoto' => $lastNewPhoto
-                ]
-            )
-        </div> --}}
           
 @endsection
 
