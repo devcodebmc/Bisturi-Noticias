@@ -104,9 +104,6 @@ class BlogController extends Controller
         if( DB::table('categories')->where('slug', $categorySlug)->doesntExist() ){
             return response()->view('front.errors.404', [], 404);
         }
-        elseif( $categorySlug == 'opinion' ){
-            return $this->opinion();
-        }
         elseif( $categorySlug == 'clicks'){
             return $this->clicks();
         }
@@ -164,27 +161,6 @@ class BlogController extends Controller
             // dd("Tiempo de ejecución: " . $execution_time . " segundos");
             return view('front.sections.'.$categorySlug, compact('articles','lastArticles'));
 
-    }
-
-    public function opinion(){
-
-        $latest = Article::select('id','title','summary','category_id','user_id',
-            'created_at','slug')
-                ->where('category_id',15)
-                ->where('status', '=', 'publico')
-                ->where('tipo_id','=',2)
-                ->whereNull('deleted_at')
-                ->orderBy('created_at', 'DESC')
-                ->paginate(8);
-        $latest->each(function($latest){
-            $latest->category;
-            $latest->tags;
-            $latest->images;
-            $latest->user;
-        });
-
-        return view('front.sections.opinion')
-        ->with('latest',$latest);
     }
 
     public function clicks(){

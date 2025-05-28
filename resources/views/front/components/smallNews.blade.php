@@ -3,8 +3,11 @@
     <div class="uk-width-expand@s">
         <a href="{{ route('showArticle',['category'=> $smallArticle->category->slug,'slug'=>$smallArticle->slug])}}"
             class="uk-link-reset" 
-            title="{{ $smallArticle->title }}">
-            <h6 class="uk-margin-remove-bottom blue-links">{{ Str::limit($smallArticle->title, 85) }}</h6>
+            title="{{ $smallArticle->title }}"
+            uk-tooltip="pos: top; offset: 10">
+            <h6 class="uk-margin-remove-bottom blue-links">
+                {{ Str::limit($smallArticle->title, 85) }}
+            </h6>
         </a>
         <small class="uk-text-light"> {{$smallArticle->created_at->diffForHumans()}} </small> 
     </div>

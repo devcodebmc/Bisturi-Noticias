@@ -1,59 +1,138 @@
-<div class="uk-position-relative uk-visible-toggle uk-light uk-margin-large-top uk-box-shadow-large uk-border-rounded"  
-      tabindex="-1" uk-slideshow="min-height: 220; max-height: 500">
 
-  <div class="uk-slideshow-items uk-border-rounded">
-    @foreach ($article->images as  $image)
-      <div>
-        <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}" title="{{ $article->title }}">
-          <img src="{{ asset('storage'.'/'.$article->user->name.'/'.$image->name) }}" 
-                alt="{{ $article->title }}" 
-                class="main-image"
-                uk-cover>
-        </a>
-      </div>
-      @endforeach
-  </div>
+<div class="uk-position-relative uk-margin-large-top">
+    <!-- Slider - Versión desktop -->
+    
+    <!-- Título de la categoría  exepto en /-->
+    @if (Route::current()->getName() != "index")
+        <div class="uk-width-1-1@m">
+            <h4 class="side-title uk-text-left">
+                {{ $article->category->name }}
+            </h4>
+        </div> 
+    @endif
 
-  <a class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous uk-slideshow-item="previous"></a>
-  <a class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next uk-slideshow-item="next"></a>
-
-</div>
-
- <div class="uk-card uk-card-default new-card uk-border-rounded uk-card-body uk-width-1-2@m">
-    <div class=" uk-flex-inline uk-flex-wrap">
-        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-margin-medium-right">
-            <li>
-              <a class="uk-text-capitalize" href="{{ route('categories', [ 'categorySlug' => $article->category->slug ]) }}">
-                <span class="side-title">
-                {{$article->category->name}}
-                </span>
-              </a>
-            </li>  
-            <span class="font-codec">
-              {{$article->created_at->diffForHumans()}} 
-            </span> 
-        </ul>     
-        <ul class="uk-subnav uk-subnav-divider uk-margin-remove-top">
-            @include('front.partials.sharelinks')
-        </ul>        
+    <div class="uk-visible@m">
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+          <div class="uk-slideshow-items uk-border-rounded">
+              @foreach ($article->images as $image)
+              <div>
+                  <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}" 
+                    title="{{ $article->title }}"
+                    class="uk-display-block">
+                      <img src="{{ asset('storage/'.$article->user->name.'/'.$image->name) }}" 
+                          alt="{{ $article->title }}" 
+                          class="uk-cover"
+                          uk-cover>
+                      <canvas width="600" height="400"></canvas>
+                  </a>
+              </div>
+              @endforeach
+          </div>
+          <a class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous uk-slideshow-item="previous"></a>
+          <a class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next uk-slideshow-item="next"></a>
+        </div>
+        
+        <!-- Card superpuesta semitransparente - Desktop -->
+        <div class="uk-position-bottom-center uk-position-medium">
+            <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-large" style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(2px);">
+                <div class="uk-card-body">
+                    <div class="uk-flex uk-flex-between uk-flex-wrap">
+                        <ul class="uk-comment-meta uk-subnav uk-margin-remove-top">
+                            <li>
+                                <a class="uk-text-capitalize" href="{{ route('categories', ['categorySlug' => $article->category->slug]) }}">
+                                    <span class="side-title">{{ $article->category->name }}</span>
+                                </a>
+                            </li>  
+                            <li class="font-codec">{{ $article->created_at->diffForHumans() }}</li>
+                        </ul>     
+                        
+                        <ul class="uk-subnav uk-margin-remove-top">
+                            @include('front.partials.sharelinks')
+                        </ul>        
+                    </div>
+                    
+                    <h1 class="uk-card-title uk-text-bold uk-margin-small-top uk-margin-small-bottom">
+                        <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}"
+                           class="blue-links"
+                           title="{{ $article->title }}">
+                            {{ Str::limit($article->title, 100) }}
+                        </a>
+                    </h1>
+                    
+                    <div class="uk-flex uk-flex-between uk-flex-middle">
+                        <p class="uk-text-emphasis new-desc uk-margin-remove uk-width-expand">
+                            {{ Str::limit($article->summary, 150) }}
+                        </p>
+                        <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}"
+                           title="{{ $article->summary }}"
+                           uk-tooltip="pos: top-right; offset: 10"
+                           class="uk-link-reset uk-margin-left"
+                           uk-icon="icon: arrow-right; ratio: 1.5">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <h1 class="uk-card-title uk-text-bold uk-margin-remove-top">
-      <a href="{{ route('showArticle',['category' => $article->category->slug, 'slug'=>$article->slug])}}"
-          class="blue-links"
-          title="{{ $article->title }}"
-          uk-tooltip="pos: top-right; offset: 10">
-        {{ Str::limit($article->title, 150) }}
-      </a>
-    </h1>
-    <a href="{{ route('showArticle',['category' => $article->category->slug, 'slug'=>$article->slug]) }}"
-        title="{{ $article->summary }}"
-        uk-tooltip="pos: top-left; offset: 10"
-        class="uk-link-reset uk-float-right" 
-        uk-icon="icon: arrow-right; ratio: 1.5">
-    </a>
-    <p class="uk-text-emphasis new-desc">{{ Str::limit($article->summary, 150) }}</p>
-</div>
 
+    <!-- Versión móvil (sin espacios) -->
+    <div class="uk-hidden@m">
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+            <div class="uk-slideshow-items uk-border-rounded">
+                @foreach ($article->images as $image)
+                <div>
+                    <img src="{{ asset('storage/'.$article->user->name.'/'.$image->name) }}" 
+                         alt="{{ $article->title }}" 
+                         class="uk-cover"
+                         uk-cover>
+                    <canvas width="600" height="400"></canvas>
+                </div>
+                @endforeach
+            </div>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next uk-slideshow-item="next"></a>
+        </div>
+        
+        <!-- Card unida a la imagen -->
+        <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-small">
+            <div class="uk-card-body">
+                <div class="uk-flex uk-flex-between uk-flex-wrap">
+                    <ul class="uk-comment-meta uk-subnav uk-margin-remove-top">
+                        <li>
+                            <a class="uk-text-capitalize" href="{{ route('categories', ['categorySlug' => $article->category->slug]) }}">
+                                <span class="side-title">{{ $article->category->name }}</span>
+                            </a>
+                        </li>  
+                        <li class="font-codec">{{ $article->created_at->diffForHumans() }}</li>
+                    </ul>     
+                    
+                    <ul class="uk-subnav uk-margin-remove-top">
+                        @include('front.partials.sharelinks')
+                    </ul>        
+                </div>
+                
+                <h1 class="uk-card-title uk-text-bold uk-margin-small-top uk-margin-small-bottom">
+                    <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}"
+                       class="blue-links"
+                       title="{{ $article->title }}">
+                        {{ Str::limit($article->title, 100) }}
+                    </a>
+                </h1>
+                
+                <div class="uk-flex uk-flex-between uk-flex-middle">
+                    <p class="uk-text-emphasis new-desc uk-margin-remove uk-width-expand">
+                        {{ Str::limit($article->summary, 150) }}
+                    </p>
+                    <a href="{{ route('showArticle', ['category' => $article->category->slug, 'slug' => $article->slug]) }}"
+                       title="Leer más"
+                       class="uk-link-reset uk-margin-left"
+                       uk-icon="icon: arrow-right; ratio: 1.5">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- @push('js')
 <script>

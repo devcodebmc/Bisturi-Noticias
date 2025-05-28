@@ -6,7 +6,7 @@
 
         <div class="uk-padding uk-width-1-1@m">
             @each('front.components.mainNews',$articles, 'article')
-            <hr class="uk-margin-large-top new-hr">
+            <hr class="uk-margin-top new-hr">
         </div>
 
 

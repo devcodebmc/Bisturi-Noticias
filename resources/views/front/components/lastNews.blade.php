@@ -38,12 +38,18 @@
                         <a href="{{ route('showArticle', ['category' => $lastnew->category->slug, 'slug' => $lastnew->slug]) }}" 
                            class="blue-links" 
                            title="{{ $lastnew->title }}">
-                           {{ Str::limit($lastnew->title, 70) }}
+                           {{ $lastnew->title }}
                         </a>
                     </h3>
                     
                     <!-- Resumen -->
-                    <p class="uk-text-muted new-desc">{{ Str::limit($lastnew->summary, 115) }}</p>
+                    <a href="{{ route('showArticle', ['category' => $lastnew->category->slug, 'slug' => $lastnew->slug]) }}" 
+                        class="uk-link-reset"
+                        title="{{ $lastnew->summary }}">
+                        <span  class="new-desc">
+                            {{ Str::limit($lastnew->summary, 115) }}
+                        </span>       
+                    </a>
                 </div>
             </div>
         </div>
