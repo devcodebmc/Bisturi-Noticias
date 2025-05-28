@@ -24,14 +24,14 @@
         <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-margin-medium-right">
             <li>
               <a class="uk-text-capitalize" href="{{ route('categories', [ 'categorySlug' => $article->category->slug ]) }}">
-                <span class="uk-text-muted side-title">
+                <span class="side-title">
                 {{$article->category->name}}
                 </span>
               </a>
             </li>  
-            <small class="font-codec">
+            <span class="font-codec">
               {{$article->created_at->diffForHumans()}} 
-            </small> 
+            </span> 
         </ul>     
         <ul class="uk-subnav uk-subnav-divider uk-margin-remove-top">
             @include('front.partials.sharelinks')
@@ -40,14 +40,16 @@
     <h1 class="uk-card-title uk-text-bold uk-margin-remove-top">
       <a href="{{ route('showArticle',['category' => $article->category->slug, 'slug'=>$article->slug])}}"
           class="blue-links"
-          title="{{ $article->title }}">
-      {{ Str::limit($article->title, 150) }}
+          title="{{ $article->title }}"
+          uk-tooltip="pos: top-right; offset: 10">
+        {{ Str::limit($article->title, 150) }}
       </a>
     </h1>
     <a href="{{ route('showArticle',['category' => $article->category->slug, 'slug'=>$article->slug]) }}"
-      title="{{ $article->title }}" 
-      class="uk-link-reset uk-float-right" 
-      uk-icon="icon: arrow-right; ratio: 1.5">
+        title="{{ $article->summary }}"
+        uk-tooltip="pos: top-left; offset: 10"
+        class="uk-link-reset uk-float-right" 
+        uk-icon="icon: arrow-right; ratio: 1.5">
     </a>
     <p class="uk-text-emphasis new-desc">{{ Str::limit($article->summary, 150) }}</p>
 </div>

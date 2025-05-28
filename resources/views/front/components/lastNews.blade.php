@@ -1,54 +1,64 @@
-<div class="uk-padding-small uk-child-width-1-2@s" uk-grid="masonry: pack">
-
-    <div class="uk-width-expand@m">
+<div class="uk-padding-small uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-expand@m" uk-grid="masonry: pack">
+    <!-- Columna principal -->
+    <div>
         @foreach ($lastNewText as $lastnew)
-        <div class="uk-card uk-card-default uk-card-hover uk-grid-collapse uk-margin 
-                    uk-child-width-1-2@s" uk-grid>
-            <div class="uk-card-media-left uk-cover-container" style="border-radius: 5px 0 0 5px;">
-                @foreach ($lastnew->images as $key=>  $image)
-                    @if ($key == 0)
-                    <a href="{{ route('showArticle',['category'=> $lastnew->category->slug,'slug'=>$lastnew->slug])}}" class=" uk-link-reset" title="{{ $lastnew->title }}">
-                        <img src="{{ asset('storage'.'/'.$lastnew->user->name.'/'.$image->name) }}" 
-                                alt="{{ $lastnew->title }}"
-                                class="last-image" uk-cover>
-                        <canvas width="600" height="400"></canvas>
-                    </a>
-                    @endif
-                 @endforeach
+        <div class="uk-card uk-card-default uk-card-hover uk-border-rounded uk-grid-collapse uk-margin-medium-bottom" uk-grid>
+            <!-- Imagen -->
+            <div class="uk-card-media-left uk-width-1-3@m uk-cover-container uk-border-rounded">
+                @if($lastnew->images->isNotEmpty())
+                <a href="{{ route('showArticle', ['category' => $lastnew->category->slug, 'slug' => $lastnew->slug]) }}" 
+                   class="uk-link-reset" 
+                   title="{{ $lastnew->title }}">
+                    <img src="{{ asset('storage/'.$lastnew->user->name.'/'.$lastnew->images[0]->name) }}" 
+                         alt="{{ $lastnew->title }}"
+                         class="last-image" 
+                         uk-cover>
+                    <canvas width="600" height="400"></canvas>
+                </a>
+                @endif
             </div>
-            <div class="uk-box-shadow-large">
+            
+            <!-- Contenido -->
+            <div class="uk-width-2-3@m">
                 <div class="uk-card-body">
-                    <div style="margin-bottom: -25px;">
-                        <small class="uk-text-muted side-title">
-                            {{$lastnew->category->name}}
-                        </small>
-                        <small class="font-codec">| &nbsp;&nbsp; 
-                            {{$lastnew->created_at->diffForHumans()}} 
-                        </small> 
+                    <!-- Metadatos -->
+                    <div class="uk-flex uk-flex-middle uk-margin-small-bottom">
+                        <a class="uk-text-capitalize uk-link-reset uk-text-small uk-text-bold" 
+                           href="{{ route('categories', ['categorySlug' => $lastnew->category->slug]) }}"
+                           title="{{ $lastnew->category->name }}">
+                            {{ $lastnew->category->name }}
+                        </a>
+                        <span class="uk-margin-small-left uk-text-muted uk-text-small">
+                            {{ $lastnew->created_at->diffForHumans() }}
+                        </span>
                     </div>
-                        <h3 style="line-height: 1;">
-                            <a href="{{ route('showArticle',['category'=> $lastnew->category->slug,'slug'=>$lastnew->slug])}}" 
-                                class="blue-links" 
-                                title="{{ $lastnew->title }}">{{ Str::limit($lastnew->title, 150) }}
-                            </a>
-                        </h3>
-                    </a>
-                    <p class="new-desc">{{ Str::limit($lastnew->summary, 85) }}</p>
+                    
+                    <!-- Título -->
+                    <h3 class="uk-card-title uk-margin-remove-top">
+                        <a href="{{ route('showArticle', ['category' => $lastnew->category->slug, 'slug' => $lastnew->slug]) }}" 
+                           class="blue-links" 
+                           title="{{ $lastnew->title }}">
+                           {{ Str::limit($lastnew->title, 70) }}
+                        </a>
+                    </h3>
+                    
+                    <!-- Resumen -->
+                    <p class="uk-text-muted new-desc">{{ Str::limit($lastnew->summary, 115) }}</p>
                 </div>
             </div>
         </div>
         @endforeach
-        {{-- @include('front.components.blockquote',['textPhrase','author'])  --}}
-        <section class="uk-margin-top">
+        
+        <!-- Paginación -->
+        <div class="uk-margin-top">
             {{ $lastNewText->links('vendor.pagination.new-pagination') }}
-        </section>    
-    </div>
-
-
-    <div class="uk-width-1-3@m">
-        <div class="uk-card uk-card-default">
-                @include('front.components.sideColumn')
         </div>
     </div>
-    
+
+    <!-- Sidebar -->
+    <div class="uk-width-1-3@m">
+        <div class="uk-card uk-card-default">
+            @include('front.components.sideColumn')
+        </div>
+    </div>
 </div>
